@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeline COEPI, ENACIN e PPGCI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+      --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+      --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+      --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+      --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+      --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+      --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;
+      --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;--color-border:#d4d1ca;--color-divider:#dcd9d5;
+      --color-text:#28251d;--color-text-muted:#64625d;--color-text-faint:#8d8a84;--color-text-inverse:#f9f8f4;
+      --color-primary:#01696f;--color-primary-hover:#0c4e54;--color-primary-highlight:#cedcd8;
+      --color-blue:#006494;--color-purple:#7a39bb;--color-gold:#d19900;
+      --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.06);--shadow-md:0 8px 20px rgba(0,0,0,.08);
+      --font-display:'Instrument Serif', Georgia, serif;--font-body:'Inter', Arial, sans-serif;
+    }
+    [data-theme="dark"]{
+      --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;--color-border:#393836;--color-divider:#262523;
+      --color-text:#e2e0db;--color-text-muted:#b2aea6;--color-text-faint:#8f8b84;--color-text-inverse:#171614;
+      --color-primary:#4f98a3;--color-primary-hover:#227f8b;--color-primary-highlight:#313b3b;
+      --color-blue:#7cb4dd;--color-purple:#b38ae0;--color-gold:#efc35d;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.25);--shadow-md:0 10px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;background:var(--color-bg);color:var(--color-text)}
+    button,input{font:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:var(--space-6)}
+    .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-4);margin-bottom:var(--space-8);flex-wrap:wrap}
+    .brand{display:flex;gap:var(--space-3);align-items:center}
+    .logo{width:44px;height:44px;border:1px solid var(--color-border);border-radius:14px;display:grid;place-items:center;background:var(--color-surface);box-shadow:var(--shadow-sm)}
+    .logo svg{width:24px;height:24px}
+    h1{font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.05;letter-spacing:-.02em;max-width:12ch}
+    .subtitle{color:var(--color-text-muted);max-width:74ch;margin-top:var(--space-2)}
+    .actions{display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap}
+    .theme-toggle,.pill,.chip,.filter-btn,.year-btn{border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);border-radius:var(--radius-full)}
+    .theme-toggle{width:44px;height:44px;display:grid;place-items:center}
+    .panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
+    .controls{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--space-4);padding:var(--space-4);margin-bottom:var(--space-6)}
+    .control-block{display:flex;flex-direction:column;gap:var(--space-3)}
+    .label{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-faint)}
+    .search{display:flex;align-items:center;gap:var(--space-3);padding:0 var(--space-4);min-height:52px;border:1px solid var(--color-border);background:var(--color-surface-2);border-radius:var(--radius-lg)}
+    .search input{border:none;background:transparent;outline:none;width:100%;color:var(--color-text)}
+    .filter-row,.year-row{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+    .filter-btn,.year-btn,.pill,.chip{padding:.6rem .95rem;font-size:var(--text-sm)}
+    .filter-btn.active,.year-btn.active{background:var(--color-primary);color:var(--color-text-inverse);border-color:var(--color-primary)}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:var(--space-5)}
+    .sidebar{position:sticky;top:var(--space-4);align-self:start;padding:var(--space-4)}
+    .legend{display:grid;gap:var(--space-3);margin-top:var(--space-3)}
+    .legend-item{display:flex;gap:var(--space-3);align-items:center;color:var(--color-text-muted);font-size:var(--text-sm)}
+    .dot{width:12px;height:12px;border-radius:50%}
+    .dot.coepi{background:var(--color-primary)} .dot.enacin{background:var(--color-purple)} .dot.ppgci{background:var(--color-blue)} .dot.shared{background:var(--color-gold)}
+    .stats{display:grid;gap:var(--space-3);margin-top:var(--space-5)}
+    .stat{padding:var(--space-4);background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
+    .stat strong{display:block;font-size:var(--text-xl);line-height:1;font-variant-numeric:tabular-nums}
+    .timeline{position:relative;padding-left:var(--space-6)}
+    .timeline:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(var(--color-divider), transparent)}
+    .year-group{position:relative;padding-bottom:var(--space-6)}
+    .year-marker{position:sticky;top:0;z-index:2;display:inline-flex;align-items:center;gap:var(--space-2);padding:.4rem .8rem;border-radius:var(--radius-full);border:1px solid var(--color-border);background:color-mix(in srgb, var(--color-surface) 88%, transparent);backdrop-filter:blur(8px);font-weight:700;margin-bottom:var(--space-4)}
+    .year-group:before{content:"";position:absolute;left:-1px;top:10px;width:22px;height:22px;border-radius:50%;background:var(--color-bg);border:5px solid var(--color-primary)}
+    .cards{display:grid;gap:var(--space-4)}
+    .event{position:relative;padding:var(--space-4);background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
+    .event:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+    .event-head{display:flex;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-3);flex-wrap:wrap}
+    .event h3{font-size:var(--text-lg);line-height:1.2;max-width:32ch}
+    .meta{display:flex;gap:var(--space-2);flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:.5rem}
+    .chip.coepi{color:var(--color-primary);background:color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));border-color:color-mix(in srgb, var(--color-primary) 25%, var(--color-border))}
+    .chip.enacin{color:var(--color-purple);background:color-mix(in srgb, var(--color-purple) 10%, var(--color-surface));border-color:color-mix(in srgb, var(--color-purple) 25%, var(--color-border))}
+    .chip.ppgci{color:var(--color-blue);background:color-mix(in srgb, var(--color-blue) 10%, var(--color-surface));border-color:color-mix(in srgb, var(--color-blue) 25%, var(--color-border))}
+    .chip.shared{color:#8b6300;background:color-mix(in srgb, var(--color-gold) 12%, var(--color-surface));border-color:color-mix(in srgb, var(--color-gold) 25%, var(--color-border))}
+    .event p{color:var(--color-text-muted);max-width:72ch}
+    .empty{display:none;padding:var(--space-8);text-align:center;color:var(--color-text-muted)}
+    .footer-note{margin-top:var(--space-6);padding:var(--space-4);font-size:var(--text-sm);color:var(--color-text-muted)}
+    .muted{color:var(--color-text-muted)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-width: 920px){.controls,.layout{grid-template-columns:1fr}.sidebar{position:relative;top:auto}.timeline{padding-left:var(--space-5)}}
+    @media (max-width: 640px){.wrap{padding:var(--space-4)} .topbar{margin-bottom:var(--space-6)} .search{min-height:48px} .theme-toggle{width:40px;height:40px}}
+  </style>
+</head>
+<body>
+  <a href="#conteudo" class="sr-only">Ir para o conteúdo</a>
+  <div class="wrap">
+    <header class="topbar">
+      <div>
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-label="Logo da timeline">
+              <path d="M9 24h9l6-11 6 22 5-11h4"/>
+              <circle cx="9" cy="24" r="2.5" fill="currentColor" stroke="none"/>
+              <circle cx="24" cy="13" r="2.5" fill="currentColor" stroke="none"/>
+              <circle cx="30" cy="35" r="2.5" fill="currentColor" stroke="none"/>
+              <circle cx="39" cy="24" r="2.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div>
+            <div class="label">Linha do tempo interativa</div>
+            <h1>COEPI, ENACIN e PPGCI</h1>
+          </div>
+        </div>
+        <p class="subtitle">Visualização filtrável para uso em Google Sites, com eventos históricos e institucionais organizados por ano, eixo temático e palavras-chave.</p>
+      </div>
+      <div class="actions">
+        <span class="pill">Responsiva</span>
+        <span class="pill">Pronta para embed</span>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="panel controls" aria-label="Controles da timeline">
+      <div class="control-block">
+        <label class="label" for="searchInput">Buscar por palavra-chave</label>
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <input id="searchInput" type="text" placeholder="Ex.: Capes, singularização, seminário, UFRJ" />
+        </div>
+      </div>
+      <div class="control-block">
+        <span class="label">Filtrar por eixo</span>
+        <div class="filter-row" id="filterRow">
+          <button class="filter-btn active" data-filter="all" type="button">Todos</button>
+          <button class="filter-btn" data-filter="coepi" type="button">COEPI</button>
+          <button class="filter-btn" data-filter="enacin" type="button">ENACIN</button>
+          <button class="filter-btn" data-filter="ppgci" type="button">PPGCI</button>
+          <button class="filter-btn" data-filter="shared" type="button">Integrados</button>
+        </div>
+        <span class="label">Atalhos por ano</span>
+        <div class="year-row" id="yearRow"></div>
+      </div>
+    </section>
+
+    <main id="conteudo" class="layout">
+      <aside class="panel sidebar">
+        <div class="label">Legenda</div>
+        <div class="legend">
+          <div class="legend-item"><span class="dot coepi"></span> COEPI</div>
+          <div class="legend-item"><span class="dot enacin"></span> ENACIN</div>
+          <div class="legend-item"><span class="dot ppgci"></span> PPGCI</div>
+          <div class="legend-item"><span class="dot shared"></span> Evento integrado</div>
+        </div>
+        <div class="stats" id="stats"></div>
+      </aside>
+
+      <section>
+        <div class="timeline" id="timeline"></div>
+        <div class="panel empty" id="emptyState">Nenhum evento corresponde aos filtros atuais.</div>
+        <div class="panel footer-note">Sugestão de uso no Google Sites: publique este HTML em um endereço HTTPS e incorpore a URL pelo menu <strong>Inserir &gt; Incorporar</strong>; o Google Sites permite incorporar páginas e também código HTML/JavaScript no novo Sites, desde que o conteúdo possa ser carregado em iframe e use HTTPS.</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const events = [
+      {year:1955, title:'Origem histórica no Curso de Documentação Científica', type:'ppgci', tags:['CDC','origem','especialização'], text:'O Ibict registra 1955 como ano de criação do Curso de Documentação Científica, apontado como origem histórica do futuro PPGCI.', source:'PPGCI'},
+      {year:1970, title:'Início do mestrado em Ciência da Informação', type:'ppgci', tags:['mestrado','pioneirismo'], text:'O curso de mestrado em Ciência da Informação foi iniciado em 1970 e é apresentado como pioneiro no Brasil e na América Latina.', source:'PPGCI'},
+      {year:1982, title:'Integração à Escola de Comunicação da UFRJ', type:'ppgci', tags:['UFRJ','estrutura acadêmica'], text:'A página institucional informa que, em 1982, o PPGCI passou a funcionar como parte da estrutura acadêmica da Escola de Comunicação da UFRJ.', source:'PPGCI'},
+      {year:1994, title:'Criação do doutorado', type:'ppgci', tags:['doutorado','expansão'], text:'O doutorado em Ciência da Informação foi iniciado em 1994, ampliando a formação oferecida pelo programa.', source:'PPGCI'},
+      {year:2003, title:'Novo convênio com a UFF', type:'ppgci', tags:['UFF','convênio'], text:'Em 2003, o programa passou a funcionar em convênio com a Universidade Federal Fluminense.', source:'PPGCI'},
+      {year:2008, title:'Retorno à UFRJ ao final do convênio com a UFF', type:'ppgci', tags:['UFRJ','transição'], text:'As informações institucionais indicam que o programa permaneceu com a UFF até 2008, quando retornou à UFRJ.', source:'PPGCI'},
+      {year:2022, title:'Início formal do projeto ENACIN', type:'enacin', tags:['laboratório social','plano político-pedagógico'], text:'A ENACIN foi apresentada como projeto iniciado em outubro de 2022 para constituir o plano político-pedagógico de uma Escola Nacional de Informação no Distrito Federal.', source:'ENACIN'},
+      {year:2022, title:'Transição de ciclo anterior da COEPI', type:'coepi', tags:['gestão','coordenação'], text:'O material institucional do PPGCI menciona coordenação da COEPI no período 2019–2022, indicando o encerramento de um ciclo anterior antes da reorganização recente.', source:'PPGCI/COEPI'},
+      {year:2023, title:'Participação no Enancib 2023', type:'shared', tags:['Enancib','produção científica','Aracaju'], text:'Pesquisadores, docentes e estudantes ligados ao ecossistema do PPGCI/Ibict participaram do Enancib 2023, reforçando a inserção científica nacional.', source:'Notícias Ibict'},
+      {year:2023, title:'Oficinas técnicas no Enancib 2023', type:'shared', tags:['oficinas','formação'], text:'O Ibict promoveu oficinas técnicas durante o Enancib 2023, articulando pesquisa, ensino e formação complementar.', source:'Notícias Ibict'},
+      {year:2023, title:'1º Seminário Interno do Projeto ENACIN', type:'enacin', tags:['seminário','pesquisa','Rio de Janeiro'], text:'Realizado em 14 de dezembro de 2023, o seminário reuniu pesquisadores e bolsistas para discutir resultados iniciais e o horizonte dos estudos da informação no Brasil.', source:'ENACIN'},
+      {year:2024, title:'Nomeação de Ricardo Medeiros Pimenta para a COEPI', type:'coepi', tags:['nomeação','coordenação'], text:'Em março de 2024, Ricardo Medeiros Pimenta foi nomeado coordenador da COEPI, unidade responsável por coordenar ensino, pesquisa e desenvolvimento do Ibict.', source:'COEPI'},
+      {year:2024, title:'Balanço institucional de 2024', type:'coepi', tags:['balanço','crescimento institucional'], text:'Ao final de 2024, a COEPI publicou balanço do ano e apontou crescimento institucional, aumento de recursos e expectativas de expansão para 2025.', source:'COEPI'},
+      {year:2025, title:'Edital marca singularização do PPGCI', type:'ppgci', tags:['edital','singularização','novo modelo'], text:'Em junho de 2025, o Ibict informou que o PPGCI deixaria de ser programa conjunto com a UFRJ e passaria a ser programa singular exclusivamente do Ibict.', source:'PPGCI'},
+      {year:2025, title:'Novo capítulo para COEPI e PPGCI', type:'shared', tags:['reestruturação','segundo semestre'], text:'Em julho de 2025, o Ibict destacou que COEPI e PPGCI entrariam em um novo capítulo institucional, apoiado na reformulação da política de ensino.', source:'Notícias Ibict'},
+      {year:2025, title:'Formalização do papel organizacional da COEPI', type:'coepi', tags:['organograma','estrutura organizacional'], text:'A estrutura organizacional publicada em 2025 descreve formalmente a COEPI como coordenação responsável por pesquisa, inovação, metas científicas e ensino.', source:'Estrutura organizacional'},
+      {year:2025, title:'Último ano da vigência inicial prevista da ENACIN', type:'enacin', tags:['vigência','prorrogação'], text:'A página do projeto informa vigência inicial até outubro de 2025, com possibilidade de prorrogação conforme os resultados obtidos.', source:'ENACIN'},
+      {year:2025, title:'ENACIN aparece em trabalho apresentado no Enancib 2025', type:'enacin', tags:['Enancib 2025','trabalho científico'], text:'A produção apresentada pelo Ibict no Enancib 2025 incluiu trabalho sobre ENACIN, sinalizando amadurecimento acadêmico do projeto.', source:'Notícias Ibict'},
+      {year:2026, title:'PPGCI recebe nota 7 na Capes', type:'ppgci', tags:['Capes','nota 7','avaliação quadrienal'], text:'Em janeiro de 2026, o PPGCI-Ibict foi noticiado com nota 7 na avaliação da Capes relativa ao período 2021–2024.', source:'PPGCI'},
+      {year:2026, title:'COEPI apresenta balanço de 2025 e prioridades para 2026', type:'coepi', tags:['prioridades','modernização','especialização'], text:'A COEPI registrou avanços estratégicos em 2025 e projetou para 2026 modernização das salas, ampliação de atividades entre Rio e Brasília e abertura de novas ofertas formativas.', source:'COEPI'},
+      {year:2026, title:'Escola de Verão 2026 vinculada à ENACIN', type:'enacin', tags:['escola de verão','ano letivo','cursos'], text:'A Escola de Verão 2026 foi anunciada como iniciativa da ENACIN vinculada à COEPI, com cursos gratuitos online e presenciais.', source:'ENACIN/COEPI'},
+      {year:2026, title:'PPGCI integra rede internacional', type:'ppgci', tags:['internacionalização','rede'], text:'Em abril de 2026, o PPGCI-Ibict foi noticiado como integrante de rede internacional aprovada em edital.', source:'PPGCI'}
+    ];
+
+    const timeline = document.getElementById('timeline');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = [...document.querySelectorAll('.filter-btn')];
+    const yearRow = document.getElementById('yearRow');
+    const stats = document.getElementById('stats');
+    const emptyState = document.getElementById('emptyState');
+    const themeToggle = document.querySelector('[data-theme-toggle]');
+
+    let currentFilter = 'all';
+    let selectedYear = 'all';
+    let query = '';
+
+    const years = [...new Set(events.map(e => e.year))].sort((a,b)=>a-b);
+
+    function iconForTheme(theme){
+      return theme === 'dark'
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    }
+
+    function setTheme(theme){
+      document.documentElement.setAttribute('data-theme', theme);
+      themeToggle.innerHTML = iconForTheme(theme);
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+    }
+
+    function createYearButtons(){
+      yearRow.innerHTML = '<button class="year-btn active" data-year="all" type="button">Todos os anos</button>' + years.map(y => `<button class="year-btn" data-year="${y}" type="button">${y}</button>`).join('');
+      [...document.querySelectorAll('.year-btn')].forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedYear = btn.dataset.year;
+          [...document.querySelectorAll('.year-btn')].forEach(b => b.classList.toggle('active', b === btn));
+          render();
+          if(selectedYear !== 'all') document.getElementById('year-' + selectedYear)?.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+    }
+
+    function filteredEvents(){
+      return events.filter(e => {
+        const matchFilter = currentFilter === 'all' || e.type === currentFilter;
+        const matchYear = selectedYear === 'all' || String(e.year) === selectedYear;
+        const hay = [e.title, e.text, e.tags.join(' '), e.source, e.type, e.year].join(' ').toLowerCase();
+        const matchQuery = !query || hay.includes(query);
+        return matchFilter && matchYear && matchQuery;
+      });
+    }
+
+    function updateStats(items){
+      const total = items.length;
+      const counts = {coepi:0,enacin:0,ppgci:0,shared:0};
+      items.forEach(i => counts[i.type]++);
+      stats.innerHTML = [
+        ['Eventos visíveis', total],
+        ['COEPI', counts.coepi],
+        ['ENACIN', counts.enacin],
+        ['PPGCI', counts.ppgci],
+        ['Integrados', counts.shared]
+      ].map(([label,value]) => `<div class="stat"><span class="label">${label}</span><strong>${value}</strong></div>`).join('');
+    }
+
+    function render(){
+      const items = filteredEvents();
+      updateStats(items);
+      emptyState.style.display = items.length ? 'none' : 'block';
+      const grouped = years.map(year => ({year, items: items.filter(e => e.year === year)})).filter(g => g.items.length);
+      timeline.innerHTML = grouped.map(group => `
+        <section class="year-group" id="year-${group.year}">
+          <div class="year-marker">${group.year}</div>
+          <div class="cards">
+            ${group.items.map(event => `
+              <article class="event" data-type="${event.type}">
+                <div class="event-head">
+                  <div>
+                    <div class="meta"><span class="chip ${event.type}">${event.source}</span>${event.tags.slice(0,2).map(t => `<span class="chip">${t}</span>`).join('')}</div>
+                    <h3>${event.title}</h3>
+                  </div>
+                </div>
+                <p>${event.text}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+      `).join('');
+    }
+
+    filterButtons.forEach(btn => btn.addEventListener('click', () => {
+      currentFilter = btn.dataset.filter;
+      filterButtons.forEach(b => b.classList.toggle('active', b === btn));
+      render();
+    }));
+
+    searchInput.addEventListener('input', e => {
+      query = e.target.value.trim().toLowerCase();
+      render();
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    createYearButtons();
+    render();
+  </script>
+</body>
+</html>
